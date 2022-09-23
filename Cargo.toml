@@ -10,3 +10,7 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 interoptopus = "0.14.14"
 interoptopus_backend_csharp = "0.14.14"
+glfw = "0.45.0"
+env_logger = "0.9"
+log = "0.4"
+wgpu = "0.13"
