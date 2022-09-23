@@ -1,6 +1,8 @@
+mod error;
+
 use interoptopus::{ffi_function, ffi_type, ffi_service, ffi_service_method, ffi_service_ctor, Inventory, InventoryBuilder, function, Error};
 use std::ops::Mul;
-use interoptopus::patterns::result::FFIError;
+use crate::error::FFIError;
 
 #[ffi_type(opaque)]
 pub struct Vec2 {
@@ -11,7 +13,7 @@ pub struct Vec2 {
 #[ffi_service(error = "FFIError", prefix = "vec2_")]
 impl Vec2 {
     #[ffi_service_ctor]
-    pub fn new(x: f32, y: f32) -> Result<Self, Error> {
+    pub fn new(x: f32, y: f32) -> Result<Self, FFIError> {
         Ok(Self {
             x,
             y
