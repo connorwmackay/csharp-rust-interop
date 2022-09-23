@@ -1,10 +1,11 @@
 mod error;
 
-use interoptopus::{ffi_function, ffi_type, ffi_service, ffi_service_method, ffi_service_ctor, Inventory, InventoryBuilder, function, Error};
+use interoptopus::{ffi_function, ffi_type, ffi_service, ffi_service_method, ffi_service_ctor, Inventory, InventoryBuilder, function, Error, pattern, extra_type};
 use std::ops::Mul;
 use crate::error::FFIError;
 
 #[ffi_type(opaque)]
+#[derive(Default)]
 pub struct Vec2 {
     pub x: f32,
     pub y: f32,
@@ -18,6 +19,22 @@ impl Vec2 {
             x,
             y
         })
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn multiply(&self, other: Vec2) -> Vec2 {
+        return Self {
+            x: self.x * other.x,
+            y: self.y * other.y
+        }
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn add(&self, other: Vec2) -> Vec2 {
+        return Self {
+            x: self.x + other.x,
+            y: self.y + other.y
+        }
     }
 }
 
@@ -71,5 +88,7 @@ pub fn my_inventory() -> Inventory {
     InventoryBuilder::new()
         .register(function!(vec2_mul))
         .register(function!(vec3_mul))
+        .register(pattern!(Vec2))
+        .register(extra_type!(Vec3))
         .inventory()
 }
