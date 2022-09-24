@@ -1,7 +1,7 @@
 mod error;
 mod window;
 
-use crate::window::run_window;
+use crate::window::GameWindow;
 
 use interoptopus::{ffi_function, ffi_type, ffi_service, ffi_service_method, ffi_service_ctor, Inventory, InventoryBuilder, function, Error, pattern, extra_type};
 use std::ops::Mul;
@@ -93,6 +93,6 @@ pub fn my_inventory() -> Inventory {
         .register(function!(vec3_mul))
         .register(pattern!(Vec2))
         .register(extra_type!(Vec3))
-        .register(function!(run_window))
+        .register(pattern!(GameWindow))
         .inventory()
 }
